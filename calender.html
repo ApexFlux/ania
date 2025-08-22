@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alan ❤️ Ania — Class Routines</title>
+  <meta name="description" content="A beautiful, cute, and aesthetic routine page for Alan & Ania." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #1a1a1d;
+      --surface: rgba(255,255,255,0.06);
+      --surface-strong: rgba(255,255,255,0.1);
+      --text: #fdeef4;
+      --muted: #d1c5d8;
+      --primary: #ff8ab4;      /* Ania's Pink */
+      --primary-2: #a2d2ff;    /* Alan's Blue */
+      --accent: #c7a9f4;      /* Lavender */
+      --good: #ff6347;        /* Tomato Red for 'now' indicator */
+      --shadow: 0 12px 35px rgba(0,0,0,.3);
+      --radius: 28px;
+      --blur: 20px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+      color: var(--text);
+      background: 
+        radial-gradient(1000px 700px at 5% 5%, rgba(255, 138, 180, .2), transparent 50%),
+        radial-gradient(1000px 700px at 95% 15%, rgba(162, 210, 255, .2), transparent 55%),
+        radial-gradient(800px 800px at 60% 90%, rgba(199, 169, 244, .18), transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    .wrap{
+      max-width: 1600px; /* Wider for calendar view */
+      margin: 32px auto 64px;
+      padding: 0 24px;
+    }
+
+    header{
+      position: relative;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(160deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.15);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .title h1{
+      margin: 0; font-weight: 700; font-size: clamp(32px, 4vw, 50px);
+      background: linear-gradient(90deg, #fff, #ffeaf0 40%, #dcebff 70%, #f4eaff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-family: 'Dancing Script', cursive;
+    }
+    .controls{
+      margin-top: 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    }
+    .segmented{
+      display: inline-flex; padding: 8px; gap: 8px;
+      border-radius: 999px; background: rgba(0,0,0,.2);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .chip{
+      appearance: none; border: none; cursor: pointer;
+      padding: 10px 18px; font-weight: 600; font-size: 14px;
+      border-radius: 999px; color: var(--text);
+      background: transparent; 
+      transition: all .2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .chip:hover { transform: translateY(-2px); }
+    .chip[aria-pressed="true"]{
+      background: linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.1));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.25), 0 10px 25px rgba(0,0,0,.3);
+      transform: translateY(0);
+    }
+    .actions{ margin-left: auto; display: flex; gap: 12px; }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.18); color:var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      padding:12px 16px; border-radius:18px; font-weight:600; cursor:pointer;
+      transition: all .2s ease;
+    }
+    .btn:hover{ filter:brightness(1.2); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+
+    /* New Google Calendar Style View */
+    .calendar-container {
+        background: linear-gradient(170deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: var(--radius);
+        backdrop-filter: blur(var(--blur));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+    .calendar-header {
+        display: grid;
+        grid-template-columns: 60px repeat(7, 1fr);
+        padding: 0 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .day-header-cell {
+        font-family: 'Kalam', cursive;
+        font-weight: 700;
+        font-size: 16px;
+        text-align: center;
+        padding: 16px 0;
+    }
+    .day-header-cell.today {
+        color: var(--accent);
+    }
+    .calendar-body {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        height: 1200px; /* Fixed height for scrollable content */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .time-column {
+        padding-top: 10px;
+    }
+    .time-label {
+        height: 80px; /* Corresponds to HOUR_HEIGHT in JS */
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        text-align: center;
+        position: relative;
+    }
+    .time-label:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 10px; right: -100vw;
+        height: 1px;
+        background: rgba(255,255,255,0.08);
+    }
+
+    .days-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        position: relative;
+    }
+    .day-column {
+        position: relative;
+        border-left: 1px solid rgba(255,255,255,0.08);
+    }
+    .day-column:first-child { border-left: none; }
+    
+    .event-item {
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        border-radius: 12px;
+        padding: 8px 10px;
+        overflow: hidden;
+        transition: all 0.2s ease;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+    }
+    .event-item[data-who="Ania"] { background: linear-gradient(160deg, var(--primary), #d46c8e); border: 1px solid rgba(255,255,255,0.3); }
+    .event-item[data-who="Alan"] { background: linear-gradient(160deg, var(--primary-2), #73a2d0); border: 1px solid rgba(255,255,255,0.3); }
+    
+    .event-title { font-weight: 600; font-size: 13px; }
+    .event-time { font-size: 11px; opacity: 0.8; }
+    
+    .now-indicator {
+        position: absolute;
+        height: 2px;
+        background: var(--good);
+        width: 100%;
+        z-index: 10;
+        display: none; /* Hidden by default, shown by JS */
+    }
+    .now-indicator::before {
+        content: '💖';
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+    }
+
+    footer{ margin: 40px 0 20px; text-align:center; opacity:.9; }
+    footer .sig{
+      font-family: 'Dancing Script', cursive; font-size: clamp(22px, 2.8vw, 32px);
+      background: linear-gradient(90deg, #fff, #ffddea, #e0f0ff, #f4eaff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    
+    .floating-hearts{ position: fixed; inset: 0; pointer-events: none; z-index: -1; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Alan <span aria-hidden>💖</span> Ania</h1>
+      </div>
+      <div class="controls">
+        <div class="segmented" role="tablist" aria-label="Choose whose routine to view">
+          <button class="chip" role="tab" aria-pressed="true" id="tab-both">Both 💖</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-ania">Ania 🌸</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-alan">Alan ⭐</button>
+        </div>
+        <div class="actions">
+          <button class="btn" id="toggleTheme" title="Toggle dark/light">☀️/🌙</button>
+          <button class="btn" id="printPage" title="Print / Save as PDF">🖨️</button>
+          <button class="btn" id="sharePage" title="Share this page">🔗</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="calendar-container">
+        <div class="calendar-header" id="calendar-header"></div>
+        <div class="calendar-body">
+            <div class="time-column" id="time-column"></div>
+            <div class="days-grid" id="days-grid"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p class="sig">Made with endless love by Alan for his Ania ✨</p>
+    </footer>
+  </div>
+
+  <canvas class="floating-hearts" id="anim"></canvas>
+
+  <script>
+    // ------- Data (editable) -------
+    const Routine = {
+      Ania: {
+        name: 'Ania',
+        color: 'var(--primary)',
+        days: {
+          'Sunday': [
+            { time: '9:30 AM - 11:00 AM', title: 'Chemistry-II', icon: '🧪' },
+            { time: '11:00 AM - 12:30 PM', title: 'Mathematics-II', icon: '📐' },
+            { time: '12:30 PM - 2:00 PM', title: 'Physics-II Lab', icon: '🔬' },
+          ],
+          'Monday': [ { time: '—', title: 'Day Off! Yay!', icon: '🎉' } ],
+          'Tuesday': [
+            { time: '11:00 AM - 12:30 PM', title: 'Statistics', icon: '📊' },
+            { time: '12:30 PM - 2:00 PM', title: 'Mathematics-II', icon: '📐' },
+            { time: '2:30 PM - 4:00 PM', title: 'Chemistry-II', icon: '🧪' },
+          ],
+          'Wednesday': [
+            { time: '9:30 AM - 11:00 AM', title: 'CSE', icon: '💻' },
+            { time: '11:00 AM - 12:30 PM', title: 'Physics-II', icon: '⚛️' },
+            { time: '2:30 PM - 4:00 PM', title: 'Statistics', icon: '📊' },
+            { time: '4:00 PM - 5:30 PM', title: 'Bangladesh St.', icon: '🇧🇩' },
+          ],
+          'Thursday': [
+            { time: '9:30 AM - 11:00 AM', title: 'Bangladesh St.', icon: '🇧🇩' },
+            { time: '11:00 AM - 12:30 PM', title: 'Chemistry-II LAB', icon: '🧪' },
+            { time: '12:30 PM - 2:00 PM', title: 'Engineering DRAW LAB', icon: '✍️' },
+            { time: '2:30 PM - 4:00 PM', title: 'CSE', icon: '💻' },
+            { time: '4:00 PM - 5:30 PM', title: 'Physics-I', icon: '⚛️' },
+          ],
+          'Friday': [], 'Saturday': [],
+        }
+      },
+      Alan: {
+        name: 'Alan',
+        color: 'var(--primary-2)',
+        days: {
+          'Sunday': [
+            { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English', icon: '🗣️' },
+            { time: '3:00 PM - 4:20 PM', title: 'MAT 1103: Calculus', icon: '➕' },
+          ],
+          'Monday': [
+            { time: '10:00 AM - 1:00 PM', title: 'EEE 1104: Eng. Drawing', icon: '✏️' },
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1101: Linear Algebra', icon: '✖️' },
+            { time: '3:00 PM - 4:20 PM', title: 'PHY 1101: Magnetism', icon: '⚡' },
+          ],
+          'Tuesday': [
+            { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English', icon: '🗣️' },
+            { time: '3:00 PM - 4:20 PM', title: 'EEE 1101: Circuit Analysis', icon: '🔌' },
+          ],
+          'Wednesday': [
+            { time: '9:00 AM - 12:00 PM', title: 'EEE 1102: Circuit Lab', icon: '💻' },
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1103: Calculus', icon: '➕' },
+            { time: '3:00 PM - 4:20 PM', title: 'PHY 1101: Magnetism', icon: '⚡' },
+          ],
+          'Thursday': [
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1101: Linear Algebra', icon: '✖️' },
+            { time: '3:00 PM - 4:20 PM', title: 'EEE 1101: Circuit Analysis', icon: '🔌' },
+          ],
+          'Friday': [], 'Saturday': [],
+        }
+      }
+    };
+
+    const daysOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const START_HOUR = 8;
+    const END_HOUR = 19; // 7 PM
+    const HOUR_HEIGHT = 80; // in pixels
+
+    // ------- Utilities -------
+    const timeToMinutes = (timeStr) => {
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':').map(Number);
+        if (modifier === 'PM' && hours < 12) hours += 12;
+        if (modifier === 'AM' && hours === 12) hours = 0;
+        return hours * 60 + minutes;
+    }
+    
+    const inDhaka = (date=new Date()) => new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+
+    function render(view='both'){
+      const calendarHeader = document.getElementById('calendar-header');
+      const timeColumn = document.getElementById('time-column');
+      const daysGrid = document.getElementById('days-grid');
+      
+      calendarHeader.innerHTML = '<div class="day-header-cell"></div>'; // Placeholder for time column
+      timeColumn.innerHTML = '';
+      daysGrid.innerHTML = '';
+      
+      const todayName = daysOrder[inDhaka().getDay()];
+
+      // 1. Build Header & Day Columns
+      daysOrder.forEach(day => {
+        const headerCell = document.createElement('div');
+        headerCell.className = 'day-header-cell';
+        headerCell.textContent = day.substring(0, 3);
+        if (day === todayName) headerCell.classList.add('today');
+        calendarHeader.appendChild(headerCell);
+
+        const dayColumn = document.createElement('div');
+        dayColumn.className = 'day-column';
+        dayColumn.dataset.day = day;
+        daysGrid.appendChild(dayColumn);
+      });
+
+      // 2. Build Time Column
+      for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
+        const timeLabel = document.createElement('div');
+        timeLabel.className = 'time-label';
+        timeLabel.textContent = `${hour % 12 === 0 ? 12 : hour % 12} ${hour < 12 || hour === 24 ? 'AM' : 'PM'}`;
+        timeColumn.appendChild(timeLabel);
+      }
+      
+      // 3. Populate Events
+      daysOrder.forEach(day => {
+        const dayColumn = daysGrid.querySelector(`[data-day="${day}"]`);
+        const eventsForDay = [];
+        if(view==='both' || view==='ania') eventsForDay.push(...(Routine.Ania.days[day]||[]).map(o=>({...o, who:'Ania'})));
+        if(view==='both' || view==='alan') eventsForDay.push(...(Routine.Alan.days[day]||[]).map(o=>({...o, who:'Alan'})));
+
+        const validEvents = eventsForDay.filter(e => e.time && e.time !== '—');
+
+        validEvents.forEach(event => {
+            const [startTimeStr, endTimeStr] = event.time.split(' - ');
+            const startMinutes = timeToMinutes(startTimeStr);
+            const endMinutes = timeToMinutes(endTimeStr);
+            const durationMinutes = endMinutes - startMinutes;
+
+            const top = ((startMinutes / 60) - START_HOUR) * HOUR_HEIGHT;
+            const height = (durationMinutes / 60) * HOUR_HEIGHT;
+
+            const eventEl = document.createElement('div');
+            eventEl.className = 'event-item';
+            eventEl.dataset.who = event.who;
+            eventEl.style.top = `${top}px`;
+            eventEl.style.height = `${height}px`;
+
+            eventEl.innerHTML = `
+                <strong class="event-title">${event.icon || ''} ${event.title}</strong>
+                <span class="event-time">${event.time}</span>
+            `;
+            dayColumn.appendChild(eventEl);
+        });
+      });
+      updateNowIndicator();
+    }
+
+    function updateNowIndicator() {
+        let indicator = document.querySelector('.now-indicator');
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.className = 'now-indicator';
+            document.getElementById('days-grid').appendChild(indicator);
+        }
+        
+        const now = inDhaka();
+        const dayIndex = now.getDay();
+        const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+        const top = ((minutesSinceMidnight / 60) - START_HOUR) * HOUR_HEIGHT;
+        
+        const dayColumnWidth = 100 / 7;
+        const left = dayIndex * dayColumnWidth;
+        
+        if (top > 0 && top < (END_HOUR - START_HOUR + 1) * HOUR_HEIGHT) {
+            indicator.style.display = 'block';
+            indicator.style.top = `${top}px`;
+            indicator.style.left = `${left}%`;
+            indicator.style.width = `${dayColumnWidth}%`;
+        } else {
+            indicator.style.display = 'none';
+        }
+    }
+
+    // ------- Controls -------
+    document.querySelector('.segmented').addEventListener('click', (e) => {
+        if (e.target.classList.contains('chip')) {
+            const view = e.target.id.replace('tab-', '');
+            document.querySelectorAll('.segmented .chip').forEach(tab => {
+                tab.setAttribute('aria-pressed', tab.id === `tab-${view}`);
+            });
+            render(view);
+        }
+    });
+
+    document.getElementById('printPage').addEventListener('click', () => window.print());
+    document.getElementById('sharePage').addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(location.href);
+            alert('Link copied!'); // Simple alert for this context
+        } catch (e) { console.error("Share failed:", e); }
+    });
+
+    // Theme toggle
+    document.getElementById('toggleTheme').addEventListener('click', () => {
+        const isLight = document.body.classList.toggle('light-theme');
+        const root = document.documentElement;
+        root.style.setProperty('--bg', isLight ? '#fdf6f9' : '#1a1a1d');
+        root.style.setProperty('--text', isLight ? '#3e2d3b' : '#fdeef4');
+    });
+
+    // Floating hearts animation
+    const canvas = document.getElementById('anim');
+    const ctx = canvas.getContext('2d');
+    let W, H; let hearts = [];
+    const heartEmojis = ['💖', '💕', '✨', '🌸', '⭐'];
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    
+    function makeHeart(){
+      return { 
+        x: Math.random()*W, y: H + 30, s: Math.random() * 15 + 10,
+        spd: Math.random() * 0.8 + 0.3, a: Math.random() * Math.PI,
+        emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)]
+      };
+    }
+    for(let i=0;i<25;i++) hearts.push(makeHeart());
+    
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      hearts.forEach(h=>{
+        h.y -= h.spd; h.x += Math.sin(h.a += 0.02) * 0.8;
+        ctx.globalAlpha = 0.5; ctx.font = h.s + 'px Poppins';
+        ctx.fillText(h.emoji, h.x, h.y);
+        if(h.y < -30) Object.assign(h, makeHeart(), { y: H + 30 });
+      });
+      requestAnimationFrame(draw);
+    }
+
+    // Kick off
+    render('both');
+    setInterval(updateNowIndicator, 60000); // Update every minute
+    draw();
+  </script>
+</body>
+</html>
