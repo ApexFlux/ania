@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Anik ❤️ Limy — Class Routines</title>
-  <meta name="description" content="A beautiful, cute, and aesthetic routine page for Anik & Limy." />
+  <title>Alan ❤️ Ania — Class Routines</title>
+  <meta name="description" content="A beautiful, cute, and aesthetic routine page for Alan & Ania." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
@@ -182,15 +182,15 @@
   <div class="wrap">
     <header>
       <div class="title">
-        <h1>Anik <span aria-hidden>💞</span> Limy</h1>
+        <h1>Alan <span aria-hidden>💞</span> Ania</h1>
         <span class="badge" id="todayBadge">Today • —</span>
         <span class="badge">Asia/Dhaka (GMT+6)</span>
       </div>
       <div class="controls">
         <div class="segmented" role="tablist" aria-label="Choose whose routine to view">
           <button class="chip" role="tab" aria-pressed="true" id="tab-both">Both</button>
-          <button class="chip" role="tab" aria-pressed="false" id="tab-limy">Limy</button>
-          <button class="chip" role="tab" aria-pressed="false" id="tab-anik">Anik</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-Ania">Ania</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-Alan">Alan</button>
         </div>
         <div class="actions">
           <button class="btn" id="toggleTheme" title="Toggle dark/light">🌗 Theme</button>
@@ -209,7 +209,7 @@
     </main>
 
     <footer>
-      <p class="sig">Made with endless love by Anik for Limy ✨</p>
+      <p class="sig">Made with endless love by Alan for Ania ✨</p>
       <p style="font-size:12px; opacity:.8">Tip: Tap a pill on top to filter. Current class (if any) glows in mint 💫</p>
     </footer>
   </div>
@@ -219,8 +219,8 @@
   <script>
     // ------- Data (editable) -------
     const Routine = {
-      Limy: {
-        name: 'Limy',
+      Ania: {
+        name: 'Ania',
         days: {
           'Sunday': [
             { time: '9:30 AM - 11:00 AM', title: 'Chemistry-II', room: 'Jr.301', icon: '🧪' },
@@ -252,8 +252,8 @@
           'Saturday': [],
         }
       },
-      Anik: {
-        name: 'Anik',
+      Alan: {
+        name: 'Alan',
         days: {
           'Sunday': [
             { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English for Technical Communication', icon: '🗣️' },
@@ -318,8 +318,8 @@
 
       for(const day of daysOrder){
         const list = [];
-        if(view==='both' || view==='limy') list.push(...(Routine.Limy.days[day]||[]).map(o=>({...o, who:'Limy'})));
-        if(view==='both' || view==='anik') list.push(...(Routine.Anik.days[day]||[]).map(o=>({...o, who:'Anik'})));
+        if(view==='both' || view==='Ania') list.push(...(Routine.Ania.days[day]||[]).map(o=>({...o, who:'Ania'})));
+        if(view==='both' || view==='Alan') list.push(...(Routine.Alan.days[day]||[]).map(o=>({...o, who:'Alan'})));
 
         // Skip completely empty days in both view
         if(list.length===0) continue;
@@ -347,7 +347,7 @@
           const tr = parseTimeRange(item.time);
           const nowCls = day===todayName && isNow(tr) ? 'now' : '';
           const roomPill = item.room ? `<span class="pill">Room: ${item.room}</span>` : '';
-          const whoPill = `<span class="pill" style="border-color: rgba(255,255,255,.22); background: ${item.who==='Limy' ? 'rgba(255,122,162,.16)' : 'rgba(130,199,255,.16)'}">${item.who}</span>`;
+          const whoPill = `<span class="pill" style="border-color: rgba(255,255,255,.22); background: ${item.who==='Ania' ? 'rgba(255,122,162,.16)' : 'rgba(130,199,255,.16)'}">${item.who}</span>`;
 
           const li = document.createElement('div');
           li.className = `item ${nowCls}`;
@@ -375,19 +375,19 @@
 
     // ------- Controls -------
     const tabBoth = document.getElementById('tab-both');
-    const tabLimy = document.getElementById('tab-limy');
-    const tabAnik = document.getElementById('tab-anik');
+    const tabAnia = document.getElementById('tab-Ania');
+    const tabAlan = document.getElementById('tab-Alan');
 
     function setTabs(which){
       tabBoth.setAttribute('aria-pressed', which==='both');
-      tabLimy.setAttribute('aria-pressed', which==='limy');
-      tabAnik.setAttribute('aria-pressed', which==='anik');
+      tabAnia.setAttribute('aria-pressed', which==='Ania');
+      tabAlan.setAttribute('aria-pressed', which==='Alan');
       render(which);
     }
 
     tabBoth.addEventListener('click', ()=> setTabs('both'));
-    tabLimy.addEventListener('click', ()=> setTabs('limy'));
-    tabAnik.addEventListener('click', ()=> setTabs('anik'));
+    tabAnia.addEventListener('click', ()=> setTabs('Ania'));
+    tabAlan.addEventListener('click', ()=> setTabs('Alan'));
 
     document.getElementById('printPage').addEventListener('click', ()=> window.print());
 
