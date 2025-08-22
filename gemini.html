@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anik ❤️ Limy — Class Routines</title>
+  <meta name="description" content="A beautiful, cute, and aesthetic routine page for Anik & Limy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* * Cuteness Overload Theme!
+     * I've softened the color palette to be more dreamy and pastel.
+     * Increased rounded corners for a softer, more 'huggable' feel.
+     * Added subtle animations and interactive effects to make it more playful.
+     */
+    :root{
+      --bg: #1a1a1d;
+      --surface: rgba(255,255,255,0.06);
+      --surface-strong: rgba(255,255,255,0.1);
+      --text: #fdeef4;
+      --muted: #d1c5d8;
+      --primary: #ff8ab4;      /* Softer, dreamier pink */
+      --primary-2: #a2d2ff;    /* Powder blue */
+      --accent: #c7a9f4;      /* Lavender */
+      --good: #80eec0;        /* Seafoam green */
+      --shadow: 0 12px 35px rgba(0,0,0,.3);
+      --radius: 28px;         /* More rounded corners! */
+      --blur: 20px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+      color: var(--text);
+      background: 
+        radial-gradient(1000px 700px at 5% 5%, rgba(255, 138, 180, .2), transparent 50%),
+        radial-gradient(1000px 700px at 95% 15%, rgba(162, 210, 255, .2), transparent 55%),
+        radial-gradient(800px 800px at 60% 90%, rgba(199, 169, 244, .18), transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 32px auto 64px;
+      padding: 0 24px;
+    }
+
+    header{
+      position: relative;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(160deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.15);
+      overflow: hidden;
+    }
+    header:before, header:after{
+      content: "✨";
+      position: absolute;
+      font-size: 100px;
+      filter: blur(2px);
+      opacity: .15;
+      z-index: 0;
+    }
+    header:before{ top: -20px; left: -20px; transform: rotate(-25deg); }
+    header:after{ bottom: -30px; right: -10px; transform: rotate(15deg); font-size: 120px;}
+
+    .title{
+      position: relative; z-index: 2;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .title h1{
+      margin: 0; font-weight: 700; letter-spacing: 1px; font-size: clamp(32px, 4vw, 50px);
+      background: linear-gradient(90deg, #fff, #ffeaf0 40%, #dcebff 70%, #f4eaff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .title span.badge{
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px;
+      border-radius: 999px; font-size: 12px; letter-spacing: .4px; font-weight: 600;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(5px);
+    }
+
+    .controls{
+      margin-top: 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      position: relative; z-index: 2;
+    }
+    .segmented{
+      display: inline-flex; padding: 8px; gap: 8px;
+      border-radius: 999px; background: rgba(0,0,0,.2);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .chip{
+      appearance: none; border: none; cursor: pointer;
+      padding: 10px 18px; font-weight: 600; font-size: 14px; letter-spacing: .3px;
+      border-radius: 999px; color: var(--text);
+      background: transparent; 
+      transition: transform .2s cubic-bezier(0.34, 1.56, 0.64, 1), background .2s ease, box-shadow .2s ease;
+    }
+    .chip:hover {
+        transform: translateY(-2px);
+    }
+    .chip[aria-pressed="true"]{
+      background: linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.1));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.25), 0 10px 25px rgba(0,0,0,.3);
+      transform: translateY(0);
+    }
+
+    .actions{ margin-left: auto; display: flex; gap: 12px; }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.18); color:var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      padding:12px 16px; border-radius:18px; font-weight:600; cursor:pointer; backdrop-filter: blur(10px);
+      transition: all .2s ease;
+    }
+    .btn:hover{ filter:brightness(1.2); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+
+    .love-meter{
+      position: relative; display:flex; align-items:center; gap: 12px;
+      padding: 12px 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+    }
+    .heart{
+      width: 24px; height: 24px; position: relative; transform: rotate(45deg);
+      animation: beat 1.2s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+    }
+    .heart:before, .heart:after{
+      content: ""; position: absolute; width: 24px; height: 24px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--primary));
+    }
+    .heart:before{ left: -12px; }
+    .heart:after{ top: -12px; }
+    @keyframes beat{ 0%, 100%{ transform: rotate(45deg) scale(1); } 10%, 30% { transform: rotate(45deg) scale(0.95); } 20%, 40% { transform: rotate(45deg) scale(1.1); }}
+
+    main{ margin-top: 32px; }
+
+    .grid{
+      display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+
+    .day-card{
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      background: linear-gradient(170deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow);
+      min-height: 160px; 
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .day-card:hover{ 
+      transform: translateY(-8px) rotate(1deg); 
+      box-shadow: 0 18px 45px rgba(0,0,0,.4); 
+    }
+    .day-card .halo{ 
+      position:absolute; inset:-50%; 
+      background: radial-gradient(circle, var(--primary), transparent 50%); 
+      filter: blur(80px); opacity:0; transition: opacity .4s ease; 
+      mix-blend-mode: overlay;
+    }
+    .day-card:hover .halo{ opacity:.2; }
+
+    .day-header{ 
+      display:flex; align-items:center; justify-content:space-between; 
+      padding:20px 22px; gap:8px; 
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .day-title{ 
+      font-weight:700; letter-spacing:.6px; font-size:18px; 
+      display:flex; align-items:center; gap:10px;
+      font-family: 'Kalam', cursive;
+    }
+    .today-tag{
+      padding:8px 12px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:.4px;
+      background: rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.22);
+    }
+
+    .list{ padding: 20px; display:flex; flex-direction:column; gap:12px; }
+    .item{
+      position:relative; padding:14px 16px; border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.12);
+      transition: transform .2s ease;
+    }
+    .item:hover {
+        transform: scale(1.02);
+    }
+    .item .row1{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .item .row1 .time{ font-weight:700; font-size:13px; letter-spacing:.3px; padding:8px 12px; border-radius:999px; background: rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.1); }
+    .item .row1 .name{ font-weight:600; font-size:15px; }
+    .item .row2{ margin-top:8px; display:flex; gap:10px; align-items:center; font-size:12px; opacity:.9; }
+    .pill{ padding:6px 10px; border-radius:999px; font-weight:700; font-size:11px; border:1px solid; background: rgba(0,0,0,.15); }
+
+    .now{ 
+      outline: 3px dashed var(--good); 
+      box-shadow: 0 0 0 6px rgba(128, 238, 192, .1) inset, 0 0 20px rgba(128, 238, 192, 0.5);
+    }
+
+    footer{ margin: 40px 0 20px; text-align:center; opacity:.9; }
+    footer .sig{
+      font-family: 'Dancing Script', cursive; font-size: clamp(22px, 2.8vw, 32px);
+      background: linear-gradient(90deg, #fff, #ffddea, #e0f0ff, #f4eaff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .floating-hearts{
+      position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    }
+    
+    /* Custom alert box for a cuter notification */
+    .custom-alert {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 16px 24px;
+        background: linear-gradient(160deg, var(--primary), var(--accent));
+        color: white;
+        border-radius: 999px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        font-weight: 600;
+        z-index: 1000;
+        transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        font-size: 14px;
+    }
+    
+    .custom-alert.show {
+        top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Anik <span aria-hidden>💖</span> Limy</h1>
+        <span class="badge" id="todayBadge">Today • —</span>
+        <span class="badge">Asia/Dhaka (GMT+6)</span>
+      </div>
+      <div class="controls">
+        <div class="segmented" role="tablist" aria-label="Choose whose routine to view">
+          <button class="chip" role="tab" aria-pressed="true" id="tab-both">Both 💖</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-limy">Limy 🌸</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-anik">Anik ⭐</button>
+        </div>
+        <div class="actions">
+          <button class="btn" id="toggleTheme" title="Toggle dark/light">☀️/🌙</button>
+          <button class="btn" id="printPage" title="Print / Save as PDF">🖨️</button>
+          <button class="btn" id="sharePage" title="Share this page">🔗</button>
+        </div>
+        <div class="love-meter" title="Love meter (always 100%!)">
+          <div class="heart"></div>
+          <strong>Love:</strong> <span>100%</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" id="cards"></section>
+    </main>
+
+    <footer>
+      <p class="sig">Made with endless love by Anik for his Limy ✨</p>
+      <p style="font-size:12px; opacity:.8">Tip: Tap a name on top to filter. The current class glows like a star! 💫</p>
+    </footer>
+  </div>
+
+  <canvas class="floating-hearts" id="anim"></canvas>
+
+  <script>
+    // ------- Data (editable) -------
+    const Routine = {
+      Limy: {
+        name: 'Limy',
+        color: 'var(--primary)',
+        days: {
+          'Sunday': [
+            { time: '9:30 AM - 11:00 AM', title: 'Chemistry-II', room: 'Jr.301', icon: '🧪' },
+            { time: '11:00 AM - 12:30 PM', title: 'Mathematics-II', room: 'Jr.301', icon: '📐' },
+            { time: '12:30 PM - 2:00 PM', title: 'Physics-II Lab', room: '705', icon: '🔬' },
+          ],
+          'Monday': [
+            { time: '—', title: 'Day Off! Yay!', room: '', icon: '🎉' },
+          ],
+          'Tuesday': [
+            { time: '11:00 AM - 12:30 PM', title: 'Statistics', room: '308', icon: '📊' },
+            { time: '12:30 PM - 2:00 PM', title: 'Mathematics-II', room: 'Jr.802', icon: '📐' },
+            { time: '2:30 PM - 4:00 PM', title: 'Chemistry-II', room: 'Jr.802', icon: '🧪' },
+          ],
+          'Wednesday': [
+            { time: '9:30 AM - 11:00 AM', title: 'CSE', room: 'Jr.802', icon: '💻' },
+            { time: '11:00 AM - 12:30 PM', title: 'Physics-II', room: 'Jr.802', icon: '⚛️' },
+            { time: '2:30 PM - 4:00 PM', title: 'Statistics', room: 'Jr.802', icon: '📊' },
+            { time: '4:00 PM - 5:30 PM', title: 'Bangladesh St.', room: 'Jr.305', icon: '🇧🇩' },
+          ],
+          'Thursday': [
+            { time: '9:30 AM - 11:00 AM', title: 'Bangladesh St.', room: 'Jr.201', icon: '🇧🇩' },
+            { time: '11:00 AM - 12:30 PM', title: 'Chemistry-II LAB', room: '806', icon: '🧪' },
+            { time: '12:30 PM - 2:00 PM', title: 'Engineering DRAW LAB', room: '', icon: '✍️' },
+            { time: '2:30 PM - 4:00 PM', title: 'CSE', room: 'Jr.201', icon: '💻' },
+            { time: '4:00 PM - 5:30 PM', title: 'Physics-I', room: 'Jr.201', icon: '⚛️' },
+          ],
+          'Friday': [],
+          'Saturday': [],
+        }
+      },
+      Anik: {
+        name: 'Anik',
+        color: 'var(--primary-2)',
+        days: {
+          'Sunday': [
+            { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English for Technical Communication', icon: '🗣️' },
+            { time: '3:00 PM - 4:20 PM', title: 'MAT 1103: Differential and Integral Calculus', icon: '➕' },
+          ],
+          'Monday': [
+            { time: '10:00 AM - 1:00 PM', title: 'EEE 1104: Computer Aided Engineering Drawing', icon: '✏️' },
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1101: Linear Algebra and Numerical Analysis', icon: '✖️' },
+            { time: '3:00 PM - 4:20 PM', title: 'PHY 1101: Electricity and Magnetism', icon: '⚡' },
+          ],
+          'Tuesday': [
+            { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English for Technical Communication', icon: '🗣️' },
+            { time: '3:00 PM - 4:20 PM', title: 'EEE 1101: Electrical Circuit Analysis', icon: '🔌' },
+          ],
+          'Wednesday': [
+            { time: '9:00 AM - 12:00 PM', title: 'EEE 1102: Electrical Circuit Analysis Lab', icon: '💻' },
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1103: Differential and Integral Calculus', icon: '➕' },
+            { time: '3:00 PM - 4:20 PM', title: 'PHY 1101: Electricity and Magnetism', icon: '⚡' },
+          ],
+          'Thursday': [
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1101: Linear Algebra and Numerical Analysis', icon: '✖️' },
+            { time: '3:00 PM - 4:20 PM', title: 'EEE 1101: Electrical Circuit Analysis', icon: '🔌' },
+          ],
+          'Friday': [],
+          'Saturday': [],
+        }
+      }
+    };
+
+    const daysOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    // ------- Utilities -------
+    const parseTimeRange = (range) => {
+      if (!range || range === '—') return null;
+      const [start, end] = range.split('-').map(s=>s.trim());
+      const to24 = (s) => {
+        const [time, ap] = s.split(/\s+/);
+        let [h,m] = time.split(':').map(Number);
+        const isPM = /PM/i.test(ap);
+        if (h === 12) h = isPM ? 12 : 0; else if (isPM) h += 12;
+        return { h, m };
+      }
+      return { start: to24(start), end: to24(end) };
+    }
+
+    const inDhaka = (date=new Date()) => new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+
+    function isNow(range){
+      if (!range) return false;
+      const now = inDhaka();
+      const st = new Date(now), en = new Date(now);
+      st.setHours(range.start.h, range.start.m, 0, 0);
+      en.setHours(range.end.h, range.end.m, 0, 0);
+      return now >= st && now <= en;
+    }
+    
+    // A cute alert function to replace the boring default one
+    function cuteAlert(message) {
+        let alertBox = document.querySelector('.custom-alert');
+        if (!alertBox) {
+            alertBox = document.createElement('div');
+            alertBox.className = 'custom-alert';
+            document.body.appendChild(alertBox);
+        }
+        alertBox.textContent = message;
+        alertBox.classList.add('show');
+        setTimeout(() => {
+            alertBox.classList.remove('show');
+        }, 2500);
+    }
+
+    function render(view='both'){
+      const cards = document.getElementById('cards');
+      cards.innerHTML = '';
+      const todayIndex = inDhaka().getDay(); // 0=Sunday
+      const todayName = daysOrder[todayIndex];
+
+      for(const day of daysOrder){
+        const list = [];
+        if(view==='both' || view==='limy') list.push(...(Routine.Limy.days[day]||[]).map(o=>({...o, who:'Limy', color: Routine.Limy.color})));
+        if(view==='both' || view==='anik') list.push(...(Routine.Anik.days[day]||[]).map(o=>({...o, who:'Anik', color: Routine.Anik.color})));
+
+        if(list.length===0) continue;
+
+        const card = document.createElement('article');
+        card.className = 'day-card';
+        card.innerHTML = `
+          <div class="halo"></div>
+          <div class="day-header">
+            <div class="day-title">${day} ${day===todayName ? '💕' : ''}</div>
+            ${day===todayName ? '<span class="today-tag">Today!</span>' : ''}
+          </div>
+          <div class="list"></div>
+        `;
+
+        const listEl = card.querySelector('.list');
+
+        list.sort((a,b)=>{
+          const pa = parseTimeRange(a.time); const pb = parseTimeRange(b.time);
+          if(!pa && !pb) return 0; if(!pa) return 1; if(!pb) return -1;
+          return pa.start.h*60+pa.start.m - (pb.start.h*60+pb.start.m);
+        });
+
+        for(const item of list){
+          const tr = parseTimeRange(item.time);
+          const nowCls = day===todayName && isNow(tr) ? 'now' : '';
+          const roomPill = item.room ? `<span class="pill" style="border-color: rgba(255,255,255,.2);">${item.room} 🏠</span>` : '';
+          const whoPill = `<span class="pill" style="border-color: ${item.color}; background: ${item.color.replace(')', ', 0.15)').replace('var(','rgba(')}">${item.who}</span>`;
+
+          const li = document.createElement('div');
+          li.className = `item ${nowCls}`;
+          li.innerHTML = `
+            <div class="row1">
+              <span class="time">${item.time}</span>
+              <span class="name">${item.icon || ''} ${item.title}</span>
+            </div>
+            <div class="row2">
+              ${roomPill}
+              ${whoPill}
+            </div>
+          `;
+          listEl.appendChild(li);
+        }
+
+        cards.appendChild(card);
+      }
+
+      const d = inDhaka();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('todayBadge').textContent = `Today • ${d.toLocaleDateString('en-GB', options)}`;
+    }
+
+    // ------- Controls -------
+    const tabControls = document.querySelector('.segmented');
+    tabControls.addEventListener('click', (e) => {
+        if (e.target.classList.contains('chip')) {
+            const view = e.target.id.replace('tab-', '');
+            setTabs(view);
+        }
+    });
+
+    function setTabs(which){
+      document.querySelectorAll('.segmented .chip').forEach(tab => {
+          tab.setAttribute('aria-pressed', tab.id === `tab-${which}`);
+      });
+      render(which);
+    }
+
+    document.getElementById('printPage').addEventListener('click', ()=> window.print());
+
+    document.getElementById('sharePage').addEventListener('click', async ()=>{
+      try{
+        const shareData = { title: document.title, text: 'Our cute class routines 💞', url: location.href };
+        if(navigator.share && navigator.canShare(shareData)){
+          await navigator.share(shareData);
+        }else{
+          // Fallback to clipboard for browsers that don't support share
+          // Using the document.execCommand for better iframe compatibility
+          const dummy = document.createElement('textarea');
+          document.body.appendChild(dummy);
+          dummy.value = location.href;
+          dummy.select();
+          document.execCommand('copy');
+          document.body.removeChild(dummy);
+          cuteAlert('Link copied to clipboard! 📋');
+        }
+      }catch(e){ 
+        console.error("Share failed:", e);
+        cuteAlert('Oops! Could not share.');
+      }
+    });
+
+    // Theme toggle (soft light mode)
+    const toggle = document.getElementById('toggleTheme');
+    let light = false;
+    toggle.addEventListener('click', ()=>{
+      light = !light;
+      const root = document.documentElement;
+      root.style.setProperty('--bg', light ? '#fdf6f9' : '#1a1a1d');
+      root.style.setProperty('--text', light ? '#3e2d3b' : '#fdeef4');
+      root.style.setProperty('--surface', light ? 'rgba(10,10,10,0.03)' : 'rgba(255,255,255,0.06)');
+      root.style.setProperty('--surface-strong', light ? 'rgba(10,10,10,0.06)' : 'rgba(255,255,255,0.1)');
+      document.body.style.background = light
+        ? 'radial-gradient(1000px 700px at 5% 5%, rgba(255, 138, 180, .2), transparent 50%), radial-gradient(1000px 700px at 95% 15%, rgba(162, 210, 255, .2), transparent 55%), radial-gradient(800px 800px at 60% 90%, rgba(199, 169, 244, .18), transparent 60%), #fdf6f9'
+        : '';
+    });
+
+    // Floating hearts background animation (lightweight)
+    const canvas = document.getElementById('anim');
+    const ctx = canvas.getContext('2d');
+    let W, H; let hearts = [];
+    const heartEmojis = ['💖', '💕', '✨', '🌸', '⭐'];
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    
+    function makeHeart(){
+      return { 
+        x: Math.random()*W, 
+        y: H + 30, 
+        s: Math.random() * 15 + 10, // size for emoji
+        spd: Math.random() * 0.8 + 0.3, 
+        a: Math.random() * Math.PI,
+        emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)]
+      };
+    }
+    for(let i=0;i<25;i++) hearts.push(makeHeart());
+    
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      hearts.forEach(h=>{
+        h.y -= h.spd; 
+        h.x += Math.sin(h.a += 0.02) * 0.8;
+        ctx.globalAlpha = 0.5;
+        ctx.font = h.s + 'px Poppins';
+        ctx.fillText(h.emoji, h.x, h.y);
+        if(h.y < -30) Object.assign(h, makeHeart(), { y: H + 30 });
+      });
+      requestAnimationFrame(draw);
+    }
+
+    // Kick off
+    setTabs('both');
+    draw();
+  </script>
+</body>
+</html>
