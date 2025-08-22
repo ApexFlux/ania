@@ -6,7 +6,7 @@
   <title>Alan ❤️ Ania — Class Routines</title>
   <meta name="description" content="A beautiful, cute, and aesthetic routine page for Alan & Ania." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -157,8 +157,6 @@
     
     .event-item {
         position: absolute;
-        left: 4px;
-        right: 4px;
         border-radius: 12px;
         padding: 8px 10px;
         overflow: hidden;
@@ -166,11 +164,17 @@
         color: #fff;
         display: flex;
         flex-direction: column;
+        z-index: 1; /* Base z-index */
+    }
+    .event-item:hover {
+        z-index: 2; /* Bring to front on hover */
+        transform: scale(1.02);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
     }
     .event-item[data-who="Ania"] { background: linear-gradient(160deg, var(--primary), #d46c8e); border: 1px solid rgba(255,255,255,0.3); }
     .event-item[data-who="Alan"] { background: linear-gradient(160deg, var(--primary-2), #73a2d0); border: 1px solid rgba(255,255,255,0.3); }
     
-    .event-title { font-weight: 600; font-size: 13px; }
+    .event-title { font-weight: 600; font-size: 13px; word-break: break-word; }
     .event-time { font-size: 11px; opacity: 0.8; }
     
     .now-indicator {
@@ -323,7 +327,7 @@
       const timeColumn = document.getElementById('time-column');
       const daysGrid = document.getElementById('days-grid');
       
-      calendarHeader.innerHTML = '<div class="day-header-cell"></div>'; // Placeholder for time column
+      calendarHeader.innerHTML = '<div class="day-header-cell"></div>';
       timeColumn.innerHTML = '';
       daysGrid.innerHTML = '';
       
@@ -359,21 +363,81 @@
         if(view==='both' || view==='alan') eventsForDay.push(...(Routine.Alan.days[day]||[]).map(o=>({...o, who:'Alan'})));
 
         const validEvents = eventsForDay.filter(e => e.time && e.time !== '—');
-
+        
+        // Add start/end times in minutes for easier processing
         validEvents.forEach(event => {
             const [startTimeStr, endTimeStr] = event.time.split(' - ');
-            const startMinutes = timeToMinutes(startTimeStr);
-            const endMinutes = timeToMinutes(endTimeStr);
-            const durationMinutes = endMinutes - startMinutes;
+            event.startMinutes = timeToMinutes(startTimeStr);
+            event.endMinutes = timeToMinutes(endTimeStr);
+        });
 
-            const top = ((startMinutes / 60) - START_HOUR) * HOUR_HEIGHT;
-            const height = (durationMinutes / 60) * HOUR_HEIGHT;
+        // *** START: Overlap calculation logic ***
+        // This logic finds groups of events that overlap and calculates their column position.
+        let groups = [];
+        // First, find all interconnected groups of overlapping events
+        let visited = new Set();
+        validEvents.forEach(event => {
+            if (visited.has(event)) return;
+            let currentGroup = [];
+            let stack = [event];
+            visited.add(event);
+            while (stack.length > 0) {
+                let current = stack.pop();
+                currentGroup.push(current);
+                validEvents.forEach(otherEvent => {
+                    if (!visited.has(otherEvent) && (current.startMinutes < otherEvent.endMinutes && current.endMinutes > otherEvent.startMinutes)) {
+                        visited.add(otherEvent);
+                        stack.push(otherEvent);
+                    }
+                });
+            }
+            groups.push(currentGroup);
+        });
+
+        // For each group, assign columns to avoid visual overlap
+        groups.forEach(group => {
+            group.sort((a, b) => a.startMinutes - b.startMinutes);
+            let columns = [];
+            group.forEach(event => {
+                let placed = false;
+                for (let i = 0; i < columns.length; i++) {
+                    const lastEventInCol = columns[i][columns[i].length - 1];
+                    if (event.startMinutes >= lastEventInCol.endMinutes) {
+                        columns[i].push(event);
+                        event.column = i;
+                        placed = true;
+                        break;
+                    }
+                }
+                if (!placed) {
+                    columns.push([event]);
+                    event.column = columns.length - 1;
+                }
+            });
+            const numColumns = columns.length;
+            group.forEach(event => {
+                event.numColumns = numColumns;
+            });
+        });
+        // *** END: Overlap calculation logic ***
+
+        validEvents.forEach(event => {
+            const top = ((event.startMinutes / 60) - START_HOUR) * HOUR_HEIGHT;
+            const height = ((event.endMinutes - event.startMinutes) / 60) * HOUR_HEIGHT;
+
+            const numColumns = event.numColumns || 1;
+            const column = event.column || 0;
+            const width = 100 / numColumns;
+            const left = column * width;
 
             const eventEl = document.createElement('div');
             eventEl.className = 'event-item';
             eventEl.dataset.who = event.who;
             eventEl.style.top = `${top}px`;
             eventEl.style.height = `${height}px`;
+            eventEl.style.width = `calc(${width}% - 6px)`;
+            eventEl.style.left = `${left}%`;
+            eventEl.style.marginLeft = '3px';
 
             eventEl.innerHTML = `
                 <strong class="event-title">${event.icon || ''} ${event.title}</strong>
