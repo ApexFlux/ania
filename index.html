@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anik ❤️ Limy — Class Routines</title>
+  <meta name="description" content="A beautiful, cute, and aesthetic routine page for Anik & Limy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f0f12;
+      --surface: rgba(255,255,255,0.08);
+      --surface-strong: rgba(255,255,255,0.12);
+      --text: #f6f7fb;
+      --muted: #c9cbe0;
+      --primary: #ff7aa2;         /* soft pink */
+      --primary-2: #82c7ff;       /* sky */
+      --accent: #b794f4;          /* lilac */
+      --good: #79e4a3;            /* mint */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 22px;
+      --blur: 16px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255, 122, 162, .25), transparent 50%),
+                  radial-gradient(1200px 800px at 90% 20%, rgba(130, 199, 255, .22), transparent 55%),
+                  radial-gradient(800px 800px at 70% 80%, rgba(183, 148, 244, .20), transparent 60%),
+                  var(--bg);
+      background-attachment: fixed;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 28px auto 64px;
+      padding: 0 20px;
+    }
+
+    header{
+      position: relative;
+      padding: 22px 22px 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    header:before, header:after{
+      content: "";
+      position: absolute;
+      width: 200px; height: 200px; border-radius: 50%;
+      filter: blur(40px);
+      opacity: .4; z-index: 0;
+    }
+    header:before{ background: radial-gradient(circle, var(--primary), transparent 60%); top: -60px; left: -60px; }
+    header:after{ background: radial-gradient(circle, var(--primary-2), transparent 60%); bottom: -80px; right: -80px; }
+
+    .title{
+      position: relative; z-index: 2;
+      display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    }
+    .title h1{
+      margin: 0; font-weight: 700; letter-spacing: .5px; font-size: clamp(28px, 3.5vw, 44px);
+      background: linear-gradient(90deg, #fff, #ffe2ea 40%, #cfe9ff 70%, #efe2ff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-family: 'Dancing Script', cursive;
+    }
+    .title span.badge{
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+      border-radius: 999px; font-size: 12px; letter-spacing: .4px; font-weight: 600;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .controls{
+      margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+      position: relative; z-index: 2;
+    }
+    .segmented{
+      display: inline-flex; padding: 6px; gap: 6px;
+      border-radius: 999px; background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(10px);
+    }
+    .chip{
+      appearance: none; border: none; cursor: pointer;
+      padding: 10px 14px; font-weight: 600; font-size: 13px; letter-spacing: .3px;
+      border-radius: 999px; color: var(--text);
+      background: transparent; transition: transform .12s ease, background .2s ease;
+    }
+    .chip[aria-pressed="true"]{
+      background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.12));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 8px 20px rgba(0,0,0,.25);
+      transform: translateY(-1px);
+    }
+
+    .actions{ margin-left: auto; display: flex; gap: 10px; }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.16); color:var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      padding:10px 14px; border-radius:14px; font-weight:600; cursor:pointer; backdrop-filter: blur(10px);
+    }
+    .btn:hover{ filter:brightness(1.1); }
+
+    .love-meter{
+      position: relative; display:flex; align-items:center; gap: 12px;
+      padding: 10px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+    }
+    .heart{
+      width: 22px; height: 22px; position: relative; transform: rotate(45deg);
+      animation: beat 1.4s infinite ease-in-out;
+    }
+    .heart:before, .heart:after{
+      content: ""; position: absolute; width: 22px; height: 22px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--primary));
+    }
+    .heart:before{ left: -11px; }
+    .heart:after{ top: -11px; }
+    @keyframes beat{ 0%, 100%{ transform: rotate(45deg) scale(1); } 50%{ transform: rotate(45deg) scale(1.12); } }
+
+    main{ margin-top: 24px; }
+
+    .grid{
+      display: grid; gap: 16px; grid-template-columns: repeat(1, 1fr);
+    }
+    @media (min-width: 700px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px){ .grid{ grid-template-columns: repeat(3, 1fr); } }
+
+    .day-card{
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(var(--blur)); box-shadow: var(--shadow);
+      min-height: 160px; transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .day-card:hover{ transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,0,0,.45); }
+    .day-card .halo{ position:absolute; inset:-40%; background: radial-gradient(circle, rgba(255,122,162,.18), transparent 60%); filter: blur(40px); opacity:0; transition: opacity .2s ease; }
+    .day-card:hover .halo{ opacity:1; }
+
+    .day-header{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; gap:8px; }
+    .day-title{ font-weight:700; letter-spacing:.6px; font-size:16px; display:flex; align-items:center; gap:10px; }
+    .today-tag{
+      padding:6px 10px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:.4px;
+      background: rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.22);
+    }
+
+    .list{ padding: 0 18px 16px; display:flex; flex-direction:column; gap:10px; }
+    .item{
+      position:relative; padding:12px 12px 12px 14px; border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .item .row1{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .item .row1 .time{ font-weight:700; font-size:13px; letter-spacing:.3px; padding:6px 10px; border-radius:999px; background: rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.15); }
+    .item .row1 .name{ font-weight:600; font-size:14px; }
+    .item .row2{ margin-top:6px; display:flex; gap:10px; align-items:center; font-size:12px; opacity:.9; }
+    .pill{ padding:4px 8px; border-radius:999px; font-weight:700; font-size:11px; border:1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); }
+
+    .now{ outline: 2px dashed var(--good); box-shadow: 0 0 0 6px rgba(121,228,163,.12) inset; }
+
+    footer{ margin: 26px 0; text-align:center; opacity:.9; }
+    footer .sig{
+      font-family: 'Dancing Script', cursive; font-size: clamp(18px, 2.4vw, 26px);
+      background: linear-gradient(90deg, #fff, #ffd6e4, #d3ecff, #efe2ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    .floating-hearts{
+      position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Anik <span aria-hidden>💞</span> Limy</h1>
+        <span class="badge" id="todayBadge">Today • —</span>
+        <span class="badge">Asia/Dhaka (GMT+6)</span>
+      </div>
+      <div class="controls">
+        <div class="segmented" role="tablist" aria-label="Choose whose routine to view">
+          <button class="chip" role="tab" aria-pressed="true" id="tab-both">Both</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-limy">Limy</button>
+          <button class="chip" role="tab" aria-pressed="false" id="tab-anik">Anik</button>
+        </div>
+        <div class="actions">
+          <button class="btn" id="toggleTheme" title="Toggle dark/light">🌗 Theme</button>
+          <button class="btn" id="printPage" title="Print / Save as PDF">🖨️ Print</button>
+          <button class="btn" id="sharePage" title="Share this page">🔗 Share</button>
+        </div>
+        <div class="love-meter" title="Love meter (100% always)">
+          <div class="heart"></div>
+          <strong>Love Meter:</strong> <span>100%</span> 💘
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" id="cards"></section>
+    </main>
+
+    <footer>
+      <p class="sig">Made with endless love by Anik for Limy ✨</p>
+      <p style="font-size:12px; opacity:.8">Tip: Tap a pill on top to filter. Current class (if any) glows in mint 💫</p>
+    </footer>
+  </div>
+
+  <canvas class="floating-hearts" id="anim"></canvas>
+
+  <script>
+    // ------- Data (editable) -------
+    const Routine = {
+      Limy: {
+        name: 'Limy',
+        days: {
+          'Sunday': [
+            { time: '9:30 AM - 11:00 AM', title: 'Chemistry-II', room: 'Jr.301', icon: '🧪' },
+            { time: '11:00 AM - 12:30 PM', title: 'Mathematics-II', room: 'Jr.301', icon: '📐' },
+            { time: '12:30 PM - 2:00 PM', title: 'Physics-II Lab', room: '705', icon: '🔬' },
+          ],
+          'Monday': [
+            { time: '—', title: 'No classes', room: '', icon: '🎉' },
+          ],
+          'Tuesday': [
+            { time: '11:00 AM - 12:30 PM', title: 'Statistics', room: '308', icon: '📊' },
+            { time: '12:30 PM - 2:00 PM', title: 'Mathematics-II', room: 'Jr.802', icon: '📐' },
+            { time: '2:30 PM - 4:00 PM', title: 'Chemistry-II', room: 'Jr.802', icon: '🧪' },
+          ],
+          'Wednesday': [
+            { time: '9:30 AM - 11:00 AM', title: 'CSE', room: 'Jr.802', icon: '💻' },
+            { time: '11:00 AM - 12:30 PM', title: 'Physics-II', room: 'Jr.802', icon: '⚛️' },
+            { time: '2:30 PM - 4:00 PM', title: 'Statistics', room: 'Jr.802', icon: '📊' },
+            { time: '4:00 PM - 5:30 PM', title: 'Bangladesh St.', room: 'Jr.305', icon: '🇧🇩' },
+          ],
+          'Thursday': [
+            { time: '9:30 AM - 11:00 AM', title: 'Bangladesh St.', room: 'Jr.201', icon: '🇧🇩' },
+            { time: '11:00 AM - 12:30 PM', title: 'Chemistry-II LAB', room: '806', icon: '🧪' },
+            { time: '12:30 PM - 2:00 PM', title: 'Engineering DRAW LAB', room: '', icon: '✍️' },
+            { time: '2:30 PM - 4:00 PM', title: 'CSE', room: 'Jr.201', icon: '💻' },
+            { time: '4:00 PM - 5:30 PM', title: 'Physics-I', room: 'Jr.201', icon: '⚛️' },
+          ],
+          'Friday': [],
+          'Saturday': [],
+        }
+      },
+      Anik: {
+        name: 'Anik',
+        days: {
+          'Sunday': [
+            { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English for Technical Communication', icon: '🗣️' },
+            { time: '3:00 PM - 4:20 PM', title: 'MAT 1103: Differential and Integral Calculus', icon: '➕' },
+          ],
+          'Monday': [
+            { time: '10:00 AM - 1:00 PM', title: 'EEE 1104: Computer Aided Engineering Drawing', icon: '✏️' },
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1101: Linear Algebra and Numerical Analysis', icon: '✖️' },
+            { time: '3:00 PM - 4:20 PM', title: 'PHY 1101: Electricity and Magnetism', icon: '⚡' },
+          ],
+          'Tuesday': [
+            { time: '1:30 PM - 2:50 PM', title: 'GED 1101: English for Technical Communication', icon: '🗣️' },
+            { time: '3:00 PM - 4:20 PM', title: 'EEE 1101: Electrical Circuit Analysis', icon: '🔌' },
+          ],
+          'Wednesday': [
+            { time: '9:00 AM - 12:00 PM', title: 'EEE 1102: Electrical Circuit Analysis Lab', icon: '💻' },
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1103: Differential and Integral Calculus', icon: '➕' },
+            { time: '3:00 PM - 4:20 PM', title: 'PHY 1101: Electricity and Magnetism', icon: '⚡' },
+          ],
+          'Thursday': [
+            { time: '1:30 PM - 2:50 PM', title: 'MAT 1101: Linear Algebra and Numerical Analysis', icon: '✖️' },
+            { time: '3:00 PM - 4:20 PM', title: 'EEE 1101: Electrical Circuit Analysis', icon: '🔌' },
+          ],
+          'Friday': [],
+          'Saturday': [],
+        }
+      }
+    };
+
+    const daysOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    // ------- Utilities -------
+    const parseTimeRange = (range) => {
+      if (!range || range === '—') return null;
+      const [start, end] = range.split('-').map(s=>s.trim());
+      const to24 = (s) => {
+        const [time, ap] = s.split(/\s+/);
+        let [h,m] = time.split(':').map(Number);
+        const isPM = /PM/i.test(ap);
+        if (h === 12) h = isPM ? 12 : 0; else if (isPM) h += 12;
+        return { h, m };
+      }
+      return { start: to24(start), end: to24(end) };
+    }
+
+    const inDhaka = (date=new Date()) => new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+
+    function isNow(range){
+      if (!range) return false;
+      const now = inDhaka();
+      const st = new Date(now), en = new Date(now);
+      st.setHours(range.start.h, range.start.m, 0, 0);
+      en.setHours(range.end.h, range.end.m, 0, 0);
+      return now >= st && now <= en;
+    }
+
+    function render(view='both'){
+      const cards = document.getElementById('cards');
+      cards.innerHTML = '';
+      const todayIndex = inDhaka().getDay(); // 0=Sunday
+      const todayName = daysOrder[todayIndex];
+
+      for(const day of daysOrder){
+        const list = [];
+        if(view==='both' || view==='limy') list.push(...(Routine.Limy.days[day]||[]).map(o=>({...o, who:'Limy'})));
+        if(view==='both' || view==='anik') list.push(...(Routine.Anik.days[day]||[]).map(o=>({...o, who:'Anik'})));
+
+        // Skip completely empty days in both view
+        if(list.length===0) continue;
+
+        const card = document.createElement('article');
+        card.className = 'day-card';
+        card.innerHTML = `
+          <div class="halo"></div>
+          <div class="day-header">
+            <div class="day-title">${day} ${day===todayName ? '✨' : ''}</div>
+            ${day===todayName ? '<span class="today-tag">Today</span>' : ''}
+          </div>
+          <div class="list"></div>
+        `;
+
+        const listEl = card.querySelector('.list');
+
+        list.sort((a,b)=>{
+          const pa = parseTimeRange(a.time); const pb = parseTimeRange(b.time);
+          if(!pa && !pb) return 0; if(!pa) return 1; if(!pb) return -1;
+          return pa.start.h*60+pa.start.m - (pb.start.h*60+pb.start.m);
+        });
+
+        for(const item of list){
+          const tr = parseTimeRange(item.time);
+          const nowCls = day===todayName && isNow(tr) ? 'now' : '';
+          const roomPill = item.room ? `<span class="pill">Room: ${item.room}</span>` : '';
+          const whoPill = `<span class="pill" style="border-color: rgba(255,255,255,.22); background: ${item.who==='Limy' ? 'rgba(255,122,162,.16)' : 'rgba(130,199,255,.16)'}">${item.who}</span>`;
+
+          const li = document.createElement('div');
+          li.className = `item ${nowCls}`;
+          li.innerHTML = `
+            <div class="row1">
+              <span class="time">${item.time}</span>
+              <span class="name">${item.icon || ''} ${item.title}</span>
+            </div>
+            <div class="row2">
+              ${roomPill}
+              ${whoPill}
+            </div>
+          `;
+          listEl.appendChild(li);
+        }
+
+        cards.appendChild(card);
+      }
+
+      // Update today badge text
+      const d = inDhaka();
+      const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+      document.getElementById('todayBadge').textContent = `Today • ${d.toLocaleDateString('en-GB', options)}`;
+    }
+
+    // ------- Controls -------
+    const tabBoth = document.getElementById('tab-both');
+    const tabLimy = document.getElementById('tab-limy');
+    const tabAnik = document.getElementById('tab-anik');
+
+    function setTabs(which){
+      tabBoth.setAttribute('aria-pressed', which==='both');
+      tabLimy.setAttribute('aria-pressed', which==='limy');
+      tabAnik.setAttribute('aria-pressed', which==='anik');
+      render(which);
+    }
+
+    tabBoth.addEventListener('click', ()=> setTabs('both'));
+    tabLimy.addEventListener('click', ()=> setTabs('limy'));
+    tabAnik.addEventListener('click', ()=> setTabs('anik'));
+
+    document.getElementById('printPage').addEventListener('click', ()=> window.print());
+
+    document.getElementById('sharePage').addEventListener('click', async ()=>{
+      try{
+        if(navigator.share){
+          await navigator.share({ title: document.title, text: 'Our cute class routines 💞', url: location.href });
+        }else{
+          await navigator.clipboard.writeText(location.href);
+          alert('Link copied!');
+        }
+      }catch(e){ console.log(e); }
+    });
+
+    // Theme toggle (soft light mode)
+    const toggle = document.getElementById('toggleTheme');
+    let light = false;
+    toggle.addEventListener('click', ()=>{
+      light = !light;
+      document.documentElement.style.setProperty('--bg', light ? '#f5f7fb' : '#0f0f12');
+      document.documentElement.style.setProperty('--text', light ? '#0d0f16' : '#f6f7fb');
+      document.documentElement.style.setProperty('--surface', light ? 'rgba(10,10,10,0.04)' : 'rgba(255,255,255,0.08)');
+      document.documentElement.style.setProperty('--surface-strong', light ? 'rgba(10,10,10,0.07)' : 'rgba(255,255,255,0.12)');
+      document.body.style.background = light
+        ? 'radial-gradient(1200px 800px at 10% 10%, rgba(255, 122, 162, .23), transparent 50%),\n           radial-gradient(1200px 800px at 90% 20%, rgba(130, 199, 255, .20), transparent 55%),\n           radial-gradient(800px 800px at 70% 80%, rgba(183, 148, 244, .18), transparent 60%),\n           #f5f7fb'
+        : '';
+    });
+
+    // Floating hearts background animation (lightweight)
+    const canvas = document.getElementById('anim');
+    const ctx = canvas.getContext('2d');
+    let W, H; let hearts = [];
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    function makeHeart(){
+      return { x: Math.random()*W, y: H+20, s: Math.random()*0.8 + 0.4, spd: Math.random()*0.5 + 0.25, a: Math.random()*Math.PI*2 };
+    }
+    for(let i=0;i<30;i++) hearts.push(makeHeart());
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      hearts.forEach(h=>{
+        h.y -= h.spd; h.x += Math.sin(h.a += 0.01) * 0.6;
+        ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(45*Math.PI/180); ctx.globalAlpha = 0.25;
+        const g = ctx.createRadialGradient(0,0,0,0,0,10*h.s);
+        g.addColorStop(0, '#fff'); g.addColorStop(1, getComputedStyle(document.documentElement).getPropertyValue('--primary'));
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(-6*h.s, 0, 6*h.s, 0, Math.PI*2);
+        ctx.arc(0, -6*h.s, 6*h.s, 0, Math.PI*2);
+        ctx.rect(-6*h.s, -6*h.s, 12*h.s, 12*h.s);
+        ctx.fill();
+        ctx.restore();
+        if(h.y < -20) Object.assign(h, makeHeart(), { y: H+20 });
+      });
+      requestAnimationFrame(draw);
+    }
+
+    // Kick off
+    setTabs('both');
+    draw();
+  </script>
+</body>
+</html>
